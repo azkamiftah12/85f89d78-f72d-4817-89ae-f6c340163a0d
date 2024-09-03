@@ -1,8 +1,9 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Param, Delete, Req, Put, Body } from '@nestjs/common';
+import { Controller, Get, Post, Param, Delete, Put, Body } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './user.entity';
-import { Request } from 'express';
+import { CreateUsersDto } from './dto/create-users.dto';
+// import { Request } from 'express';
 import { ApiTags, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 
 
@@ -31,16 +32,9 @@ export class UserController {
   @Post()
   @ApiOperation({ summary: 'Insert a User' })
   @ApiResponse({ status: 200, description: 'User successfully inserted', type: User })
-  create(@Req() request: Request): Promise<User> {
-    const { firstName, lastName, position, phone, email } = request.body;
-    const user = new User();
-    user.firstName = firstName;
-    user.lastName = lastName;
-    user.position = position;
-    user.phone = phone;
-    user.email = email;
-    return this.userService.createUser(user);
-  }
+  async createMultiple(@Body() createUsersDto: CreateUsersDto): Promise<User[]> {
+    return this.userService.createMultiple(createUsersDto.users);
+}
 
   @Put(':id')
   @ApiOperation({ summary: 'Update a User' })
