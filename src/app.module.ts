@@ -15,7 +15,7 @@ import { UserController } from './user/user.controller';
       port: 3306,
       username: 'root',
       password: '',
-      database: 'ambisius-lab-test',
+      database: 'ambisius-lab-BE-test',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
