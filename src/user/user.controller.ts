@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Param, Delete, Put, Body } from '@nestjs/common';
+import { Controller, Get, Post, Param, Put, Body } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './user.entity';
 import { CreateUsersDto } from './dto/create-users.dto';
@@ -28,6 +28,8 @@ export class UserController {
   }
 
   @Post('check-email')
+  @ApiOperation({ summary: 'Check Email Unique' })
+  @ApiResponse({ status: 200, description: 'Check Email Successfully', type: User })
   async checkEmailUnique(@Body('email') email: string) {
     const isUnique = await this.userService.isEmailUnique(email);
     return { isUnique };
@@ -39,14 +41,9 @@ export class UserController {
   @ApiResponse({ status: 200, description: 'User successfully updated', type: User })
   @ApiResponse({ status: 404, description: 'User not found' })
   async update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() updateFields: Partial<User>,
   ): Promise<User> {
     return this.userService.update(id, updateFields);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string): Promise<void> {
-    return this.userService.remove(+id);
   }
 }

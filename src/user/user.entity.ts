@@ -4,8 +4,8 @@ import { IsNotEmpty, IsEmail, IsString } from 'class-validator';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   @IsNotEmpty({ message: 'First Name should not be null or empty' })

@@ -23,10 +23,10 @@ export class UserService {
 
   async createMultiple(users: CreateUserDto[]): Promise<User[]> {
     return this.userRepository.save(users);
-}
+  }
 
-  async update(id: number, updateFields: Partial<User>): Promise<User> {
-    const user = await this.userRepository.findOneBy({id});
+  async update(id: string, updateFields: Partial<User>): Promise<User> {
+    const user = await this.userRepository.findOneBy({ id });
 
     if (!user) {
       throw new NotFoundException(`User with ID ${id} not found`);
@@ -37,7 +37,4 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-  async remove(id: number): Promise<void> {
-    await this.userRepository.delete(id);
-  }
 }
