@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Param, Delete, Put, Body, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Param, Delete, Put, Body } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './user.entity';
 import { CreateUsersDto } from './dto/create-users.dto';
@@ -20,15 +20,6 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get(':id')
-  @ApiOperation({ summary: 'Get a User' })
-  @ApiParam({ name: 'id', description: 'User ID' })
-  @ApiResponse({ status: 200, description: 'Get a User successfully', type: User })
-  @ApiResponse({ status: 404, description: 'User not found' })
-  findOne(@Param('id') id: string): Promise<User> {
-    return this.userService.findOne(+id);
-  }
-
   @Post()
   @ApiOperation({ summary: 'Insert a User' })
   @ApiResponse({ status: 200, description: 'User successfully inserted', type: User })
@@ -39,9 +30,6 @@ export class UserController {
   @Post('check-email')
   async checkEmailUnique(@Body('email') email: string) {
     const isUnique = await this.userService.isEmailUnique(email);
-    if (!isUnique) {
-      throw new BadRequestException(`The email ${email} is already in use.`);
-    }
     return { isUnique };
   }
 

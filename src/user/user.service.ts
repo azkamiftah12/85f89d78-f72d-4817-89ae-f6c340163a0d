@@ -16,10 +16,6 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  findOne(id: number): Promise<User> {
-    return this.userRepository.findOneBy({ id });
-  }
-
   async isEmailUnique(email: string): Promise<boolean> {
     const existingUser = await this.userRepository.findOne({ where: { email } });
     return !existingUser;
