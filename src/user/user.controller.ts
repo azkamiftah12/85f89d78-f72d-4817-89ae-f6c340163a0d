@@ -36,7 +36,7 @@ export class UserController {
   }
 
   @Put(':id')
-  @ApiOperation({ summary: 'Update a User' })
+  @ApiOperation({ summary: 'Update User' })
   @ApiParam({ name: 'id', description: 'User ID' })
   @ApiResponse({ status: 200, description: 'User successfully updated', type: User })
   @ApiResponse({ status: 404, description: 'User not found' })
