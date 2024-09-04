@@ -20,6 +20,11 @@ export class UserService {
     return this.userRepository.findOneBy({ id });
   }
 
+  async isEmailUnique(email: string): Promise<boolean> {
+    const existingUser = await this.userRepository.findOne({ where: { email } });
+    return !existingUser;
+  }
+
   async createMultiple(users: CreateUserDto[]): Promise<User[]> {
     return this.userRepository.save(users);
 }
